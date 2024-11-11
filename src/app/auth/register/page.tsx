@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UI/formInput";
 import Alert from "@/components/UI/alert";
-import { account } from "@/api/config/appwrite";
 import { register } from "@/api/auth";
+import Image from "next/image";
 
 export interface RegisterFormInputs {
   name: string;
@@ -32,11 +32,11 @@ const RegisterPage = () => {
       setError(err.message);
     }
   };
-
+console.log(registeredUser)
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
+        <Image
           alt="Your Company"
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           className="mx-auto h-10 w-auto"
