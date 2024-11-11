@@ -33,6 +33,7 @@ const RegisterPage = () => {
     try {
       const user = await register({ name, email, password });
       setRegisteredUser(user);
+      console.log({registeredUser})
       setSuccessMessage("Registration successful! Please log in.");
     } catch (err: any) {
       setError(err.message);
