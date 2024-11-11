@@ -68,6 +68,8 @@ const LoginPage = () => {
           alt="Your Company"
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           className="mx-auto h-10 w-auto"
+          width={40} // Set width here
+          height={40} // Set height here
         />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
           Sign in to your account

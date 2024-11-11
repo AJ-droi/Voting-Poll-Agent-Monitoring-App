@@ -12,33 +12,41 @@ export interface RegisterFormInputs {
   password: string;
 }
 
-
-
 const RegisterPage = () => {
   const [registeredUser, setRegisteredUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<RegisterFormInputs>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormInputs>();
 
-  const onSubmit: SubmitHandler<RegisterFormInputs> = async ({ name, email, password }) => {
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async ({
+    name,
+    email,
+    password,
+  }) => {
     setError(null);
     setSuccessMessage(null);
     try {
-      const user = await register({name, email, password});
+      const user = await register({ name, email, password });
       setRegisteredUser(user);
       setSuccessMessage("Registration successful! Please log in.");
     } catch (err: any) {
       setError(err.message);
     }
   };
-console.log(registeredUser)
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Image
           alt="Your Company"
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+          width={40} // Set width here
+          height={40} // Set height here
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
@@ -76,7 +84,10 @@ console.log(registeredUser)
             type="password"
             rules={{
               required: "Password is required",
-              minLength: { value: 6, message: "Password must be at least 6 characters" },
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
             }}
             errors={errors}
           />
@@ -93,7 +104,10 @@ console.log(registeredUser)
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{" "}
-          <a href="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+          <a
+            href="/auth/login"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
             Sign in
           </a>
         </p>
