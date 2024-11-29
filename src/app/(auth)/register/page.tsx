@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Input from "@/components/UI/formInput";
-import Alert from "@/components/UI/alert";
-import { register } from "@/api/auth";
+import Input from "@/components/general/formInput";
+import Alert from "@/components/general/alert";
 import Image from "next/image";
+import { ID } from "appwrite";
+import { register } from "@/app/api/register";
+import authService from "@/app/api/services/auth.service";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 export interface RegisterFormInputs {
   name: string;
@@ -31,13 +35,13 @@ const RegisterPage = () => {
     setError(null);
     setSuccessMessage(null);
     try {
-      const user = await register({ name, email, password });
-      setRegisteredUser(user);
-      console.log({registeredUser})
-      setSuccessMessage("Registration successful! Please log in.");
-    } catch (err: any) {
-      setError(err.message);
+        const response = await authService.register({email,password,name})
+        setSuccessMessage(response.message);
+    } catch (error:any) {
+        console.error('Request failed:', error);
+        setError(error.message);
     }
+   
   };
 
   return (
@@ -106,7 +110,7 @@ const RegisterPage = () => {
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{" "}
           <a
-            href="/auth/login"
+            href="/login"
             className="font-semibold text-indigo-600 hover:text-indigo-500"
           >
             Sign in

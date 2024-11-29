@@ -3,63 +3,42 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { getUsers, login, logout } from "@/api/auth";
-import Input from "@/components/UI/formInput";
-import Alert from "@/components/UI/alert";
+import Input from "@/components/general/formInput";
+import Alert from "@/components/general/alert";
 import Image from "next/image";
+import login from "@/app/api/login";
+import { useRouter } from "next/navigation";
+import authService from "@/app/api/services/auth.service";
 
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 
-
-
 const LoginPage = () => {
-  const [loggedInUser, setLoggedInUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const router = useRouter();
 
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = async ({ email, password }) => {
-    setError(null);
-    setSuccessMessage(null);
+  const onSubmit: SubmitHandler<LoginFormInputs> = async ({
+    email,
+    password,
+  }) => {
     try {
-      const session = await login(email, password);
-      console.log(session)
-    //   setLoggedInUser(user);
-      setSuccessMessage("Login successful!");
-    } catch (err: any) {
-      setError(err.message);
+      setError(null);
+      setSuccessMessage(null);
+      const data = await authService.login({ email, password });
+      if (data) router.push("/profile");
+    } catch (error: any) {
+      setError(error.message);
     }
   };
-
-  const LogOut = async() => {
-    await logout()
-    setLoggedInUser(null)
-  }
-
-  useEffect(() => {
-   const  fetchSession = async() =>{
-    const user = await getUsers()
-    setLoggedInUser(user);
-   } 
-   
-   fetchSession()
-  },[])
-
-  if (loggedInUser) {
-    return (
-      <div>
-        {successMessage && <Alert type="success" message={successMessage} />}
-        <p>Logged in as {loggedInUser.name}</p>
-        <button type="button" onClick={LogOut}>
-          Logout
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -111,7 +90,10 @@ const LoginPage = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
-          <a href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+          <a
+            href="/register"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
             Start a 14 day free trial
           </a>
         </p>
