@@ -1,12 +1,10 @@
-// pages/LoginPage.tsx
-
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/general/formInput";
 import Alert from "@/components/general/alert";
 import Image from "next/image";
-import login from "@/app/api/login";
+// import login from "@/app/api/login";
 import { useRouter } from "next/navigation";
 import authService from "@/app/api/services/auth.service";
 
@@ -43,16 +41,17 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <Image
+        {/* <Image
           alt="Your Company"
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           className="mx-auto h-10 w-auto"
           width={40} // Set width here
           height={40} // Set height here
-        />
-        <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
-          Sign in to your account
+        /> */}
+        <h2 className="mt-10  text-2xl font-semibold tracking-tight text-gray-900 py-3">
+          Welcome to PollApp
         </h2>
+        <p className="text-[#49475A] text-[16px]">Kindly fill in your details below to create an account</p>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -81,9 +80,9 @@ const LoginPage = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full justify-center rounded-md bg-[#3CB371] px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+             Login
             </button>
           </div>
         </form>
@@ -94,7 +93,7 @@ const LoginPage = () => {
             href="/register"
             className="font-semibold text-indigo-600 hover:text-indigo-500"
           >
-            Start a 14 day free trial
+            register
           </a>
         </p>
       </div>
